@@ -29,7 +29,7 @@ func main() {
 	db, err := clickhouse.Open(&clickhouse.Options{
 		Addr: []string{"localhost:9000"},
 		Auth: clickhouse.Auth{
-			Database: "warehouse",
+			Database: "heart_stroke",
 			Username: "default",
 			Password: "",
 		},
@@ -63,16 +63,28 @@ func main() {
 }
 
 func getCSVHeaders(filePath string) ([]string, error) {
+	// Open the file
 	file, err := os.Open(filePath)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to open file: %w", err)
 	}
 	defer file.Close()
 
+	// Read CSV content
 	reader := csv.NewReader(file)
 	headers, err := reader.Read()
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to read CSV headers: %w", err)
+	}
+
+	// Check if headers are empty
+	if len(headers) == 0 {
+		return nil, fmt.Errorf("CSV file must contain headers")
+	}
+
+	// Trim spaces from headers
+	for i, h := range headers {
+		headers[i] = strings.TrimSpace(h)
 	}
 
 	return headers, nil
