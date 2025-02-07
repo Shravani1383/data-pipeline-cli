@@ -57,6 +57,7 @@ Query the table to verify that data has been ingested correctly:
 ```sql
 SELECT * FROM database_name.table_name LIMIT 10;
 ```
+### 6. Performing Unit Testing
 In order execute all the unit Tests- run this command
 ```sh
 go test -v ./...
