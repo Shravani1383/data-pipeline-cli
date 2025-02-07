@@ -57,6 +57,10 @@ Query the table to verify that data has been ingested correctly:
 ```sql
 SELECT * FROM database_name.table_name LIMIT 10;
 ```
+In order execute all the unit Tests- run this command
+```sh
+go test -v ./...
+```
 
 ## Conclusion
 This setup allows seamless ingestion of CSV data into ClickHouse, making it easy to query and analyze data efficiently.
